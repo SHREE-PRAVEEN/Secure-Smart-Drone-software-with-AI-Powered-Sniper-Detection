@@ -1,0 +1,157 @@
+# ============================================================
+# MAYURI AUTONOMOUS PATROL MISSION CONFIGURATION
+# ============================================================
+# Author: Shree Praveen(@p_rav_ee_n1082)
+# Description:
+#   Defines patrol routes, behavior, communication strategy,
+#   and safety logic for surveillance and reconnaissance missions.
+# ============================================================
+
+version: 1.4
+last_updated: 2025-10-22
+
+# ------------------------------------------------------------
+# 🚁 MISSION PARAMETERS
+# ------------------------------------------------------------
+mission:
+  name: "Border_Patrol_Sector_A"
+  mission_type: "autonomous_patrol"
+  environment: "semi-urban"
+  max_duration_minutes: 45
+  loop_route: true
+  randomize_waypoints: false
+  return_to_base_on_complete: true
+  enable_logging: true
+  priority_level: "medium"
+
+# ------------------------------------------------------------
+# 📍 WAYPOINTS (latitude, longitude, altitude in meters)
+# ------------------------------------------------------------
+waypoints:
+  - { lat: 27.1775, lon: 78.0066, alt: 50 }
+  - { lat: 27.1780, lon: 78.0090, alt: 55 }
+  - { lat: 27.1792, lon: 78.0108, alt: 52 }
+  - { lat: 27.1800, lon: 78.0084, alt: 54 }
+  - { lat: 27.1790, lon: 78.0068, alt: 50 }
+
+hover_points:
+  enabled: true
+  dwell_time_s: 10
+  trigger_ai_scan: true
+  capture_media: true
+
+# ------------------------------------------------------------
+# 🎥 SURVEILLANCE SETTINGS
+# ------------------------------------------------------------
+surveillance:
+  camera_feed: "/mayuri/camera/rgb"
+  thermal_feed: "/mayuri/camera/thermal"
+  frame_rate_fps: 15
+  record_video: true
+  video_output_dir: "logs/missions/patrol_videos/"
+  ai_detection:
+    enabled: true
+    model: "ai_core/models/yolo_defense.onnx"
+    detection_interval_s: 3
+    detection_confidence_threshold: 0.55
+    alert_on_threat: true
+
+# ------------------------------------------------------------
+# 📡 COMMUNICATION SETTINGS
+# ------------------------------------------------------------
+communication:
+  report_interval_s: 30
+  send_status_to: "/mayuri/mission/status"
+  send_alerts_to: "/mayuri/alerts/patrol"
+  telemetry_topic: "/mayuri/telemetry/patrol"
+  encryption_required: true
+  retry_on_failure: true
+
+# ------------------------------------------------------------
+# 🧠 AI BEHAVIOR MODES
+# ------------------------------------------------------------
+ai_behavior:
+  path_following_mode: "smooth_spline"
+  obstacle_avoidance: true
+  obstacle_replan_distance_m: 10
+  fusion_sources: ["lidar", "radar", "camera"]
+  dynamic_replan_on_threat: true
+  predictive_path_mode: true
+  fusion_confidence_threshold: 0.65
+
+# ------------------------------------------------------------
+# 🧭 NAVIGATION & FLIGHT CONTROL
+# ------------------------------------------------------------
+navigation:
+  max_speed_mps: 12
+  cruise_speed_mps: 8
+  min_altitude_m: 20
+  max_altitude_m: 80
+  gps_update_rate_hz: 5
+  altitude_hold_tolerance_m: 0.5
+  failsafe_landing_zone: { lat: 27.1770, lon: 78.0045, alt: 0 }
+
+# ------------------------------------------------------------
+# 🧩 SENSOR CONFIGURATION
+# ------------------------------------------------------------
+sensors:
+  lidar: true
+  radar: true
+  camera: true
+  thermal: true
+  imu_stabilization: true
+  sensor_fusion_topic: "/mayuri/fusion/environment"
+
+# ------------------------------------------------------------
+# 🛡️ FAILSAFE & RECOVERY
+# ------------------------------------------------------------
+failsafe:
+  low_battery_threshold_percent: 20
+  communication_loss_timeout_s: 60
+  gps_loss_timeout_s: 15
+  safe_return_altitude_m: 60
+  retry_connection: true
+  landing_behavior: "auto_land"
+  log_failsafe_events: true
+  alert_operator_on_trigger: true
+
+# ------------------------------------------------------------
+# 🚨 ALERTS & LOGGING
+# ------------------------------------------------------------
+alerts:
+  visual_alerts: true
+  audible_alerts: false
+  log_to_file: "logs/missions/patrol_alerts.log"
+  upload_to_server: true
+  server_endpoint: "https://mayuri-control-center.local/upload_alerts"
+
+logging:
+  mission_log_path: "logs/missions/patrol_mission.log"
+  enable_detailed_logs: true
+  compress_logs_after_mission: true
+  upload_logs: true
+  upload_endpoint: "https://mayuri-control-center.local/upload_logs"
+
+# ------------------------------------------------------------
+# 🧠 CONTEXTUAL ADAPTATION
+# ------------------------------------------------------------
+context_awareness:
+  auto_environment_detection: true
+  environment_profiles:
+    - name: "urban"
+      obstacle_sensitivity_scale: 0.8
+      camera_ai_boost: 0.1
+    - name: "forest"
+      lidar_weight_boost: 0.3
+      radar_noise_filter: 1.2
+    - name: "night"
+      thermal_priority: 0.4
+      reduce_cruise_speed: true
+  adjust_sensor_weights: true
+  switch_thresholds:
+    light_level_lux: 50
+    humidity_percent: 75
+
+# ------------------------------------------------------------
+# ✅ END OF CONFIGURATION
+# ------------------------------------------------------------

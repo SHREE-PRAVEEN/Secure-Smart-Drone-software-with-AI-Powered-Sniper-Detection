@@ -1,0 +1,101 @@
+# ============================================================
+# MAYURI - Secure AI Robotics Surveillance System
+# Python Dependencies
+# ------------------------------------------------------------
+# Author: MAYURI Robotics Team
+# Date: 2025-10-22
+# Description:
+#   Python library requirements for AI Core, Navigation,
+#   Communication, UI, and System modules.
+# ============================================================
+
+# -------------------------
+# 🧠 Core AI Frameworks
+# -------------------------
+torch>=2.2.0
+torchvision>=0.17.0
+ultralytics>=8.2.0           # YOLOv8 for target detection
+onnx>=1.15.0
+onnxruntime>=1.17.0
+tflite-runtime>=2.14.0; platform_machine=="armv7l" or platform_machine=="aarch64"
+tensorflow>=2.15.0; platform_machine!="armv7l"
+
+# -------------------------
+# 📷 Computer Vision
+# -------------------------
+opencv-python>=4.9.0
+opencv-contrib-python>=4.9.0
+numpy>=1.26.0
+Pillow>=10.3.0
+
+# -------------------------
+# 🌡 Sensor & Data Fusion
+# -------------------------
+scipy>=1.13.0
+pyyaml>=6.0.2
+filterpy>=1.4.5              # For Kalman filtering (future upgrade)
+matplotlib>=3.9.0
+pandas>=2.2.2
+
+# -------------------------
+# ⚙️ Robotics Middleware (ROS2)
+# -------------------------
+rclpy>=0.12.1
+sensor-msgs>=1.13.1
+cv-bridge>=1.0.4
+geometry-msgs>=1.13.1
+std-msgs>=1.13.1
+
+# -------------------------
+# 🔒 Security & Networking
+# -------------------------
+cryptography>=42.0.7
+pycryptodome>=3.20.0
+requests>=2.32.3
+paramiko>=3.4.0
+websocket-client>=1.8.0
+netifaces>=0.11.0
+
+# -------------------------
+# 🧩 System Monitoring
+# -------------------------
+psutil>=5.9.8
+GPUtil>=1.4.0
+platformdirs>=4.2.0
+colorama>=0.4.6
+
+# -------------------------
+# 🧮 Machine Learning Utilities
+# -------------------------
+scikit-learn>=1.5.0
+joblib>=1.4.2
+seaborn>=0.13.2
+
+# -------------------------
+# 💻 Development & Debugging
+# -------------------------
+tqdm>=4.66.4
+loguru>=0.7.2
+pytest>=8.3.2
+ipython>=8.25.0
+
+# -------------------------
+# 🧭 Optional: Visualization UI
+# -------------------------
+dash>=2.17.0
+plotly>=5.22.0
+flask>=3.0.3
+PyQt5>=5.15.10
+
+# -------------------------
+# 🐳 Container & Deployment
+# -------------------------
+docker>=7.1.0
+python-dotenv>=1.0.1
+
+# -------------------------
+# 🧾 Documentation & Tools
+# -------------------------
+sphinx>=8.0.0
+pdoc>=14.1.0
+markdown>=3.6

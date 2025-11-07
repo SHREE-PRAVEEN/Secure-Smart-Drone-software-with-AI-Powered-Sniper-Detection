@@ -1,0 +1,184 @@
+# ============================================================
+# MAYURI RASPBERRY PI HARDWARE CONFIGURATION
+# ============================================================
+# Author: Shree Praveen(@p_rav_ee_n1082)
+# Description:
+#   Hardware, AI, and system configuration for MAYURI
+#   running on Raspberry Pi (4B, 5, or Compute Module).
+# ============================================================
+
+version: 1.4
+last_updated: 2025-10-22
+
+# ------------------------------------------------------------
+# ⚙️ HARDWARE DETAILS
+# ------------------------------------------------------------
+hardware:
+  name: "Raspberry_Pi_5"
+  architecture: "ARM64"
+  cpu: "Broadcom BCM2712"
+  cores: 4
+  clock_speed_ghz: 2.4
+  ram_gb: 8
+  storage_gb: 128
+  os: "Raspberry Pi OS (64-bit)"
+  power_mode: "balanced"    # Options: [eco, balanced, performance]
+  cooling_required: true
+  fan_control: true
+  enable_gpu_acceleration: true
+  gpu_driver: "V3D"
+  enable_swap: true
+  swap_size_gb: 2
+
+# ------------------------------------------------------------
+# 🧠 AI INFERENCE SETTINGS
+# ------------------------------------------------------------
+inference:
+  framework: "TensorFlow Lite"
+  delegate: "edgetpu"
+  use_edge_tpu: true
+  use_gpu_delegate: false
+  batch_size: 1
+  inference_threads: 2
+  input_size: [300, 300, 3]
+  model_precision: "INT8"
+  use_quantized_models: true
+  fallback_to_cpu: true
+  cpu_fallback_threshold_ms: 150
+  supported_models:
+    - "ai_core/models/mobilenet_surveillance.tflite"
+    - "ai_core/models/thermal_detector.tflite"
+    - "ai_core/models/object_fusion_edge.tflite"
+
+# ------------------------------------------------------------
+# 🔒 SECURITY & ACCESS CONTROL
+# ------------------------------------------------------------
+security:
+  encrypt_models: true
+  encryption_key_ref: "MAYURI_AI_004"
+  verify_hash_before_inference: true
+  model_hash_algorithm: "SHA3-512"
+  sandbox_execution: true
+  enable_secure_boot: true
+  disable_remote_ssh: true
+  restrict_usb_access: true
+  signed_model_policy: true
+
+# ------------------------------------------------------------
+# ⚡ PERFORMANCE OPTIMIZATION
+# ------------------------------------------------------------
+performance:
+  cpu_governor: "ondemand"
+  gpu_freq_mhz: 600
+  max_cpu_temp_c: 80
+  cooling_policy: "auto_fan"
+  enable_power_throttling: true
+  auto_throttle_on_overheat: true
+  throttle_temp_c: 85
+  shutdown_temp_c: 90
+  inference_rate_limit_fps: 10
+  use_dma_transfer: true
+  optimize_tensor_allocation: true
+  enable_zerocopy_memory: true
+
+# ------------------------------------------------------------
+# 🧩 SENSOR CONFIGURATION
+# ------------------------------------------------------------
+sensors:
+  camera_interface: "CSI"
+  supported_cameras:
+    - "Raspberry Pi HQ Camera"
+    - "Lepton 3.5 Thermal"
+  imu_interface: "I2C"
+  lidar_interface: "USB"
+  radar_interface: "UART"
+  gps_interface: "UART"
+  fusion_topic: "/mayuri/fusion/pi_data"
+  sync_tolerance_ms: 40
+
+# ------------------------------------------------------------
+# 📡 NETWORK & COMMUNICATION
+# ------------------------------------------------------------
+network:
+  wifi_interface: "wlan0"
+  ethernet_interface: "eth0"
+  hotspot_enabled: true
+  mesh_network_enabled: true
+  mesh_sync_topic: "/mayuri/mesh/sync"
+  telemetry_topic: "/mayuri/telemetry/pi"
+  command_channel: "/mayuri/command/pi"
+  encryption_protocol: "AES-256-GCM"
+  heartbeat_interval_s: 10
+  connection_retry_interval_s: 15
+  max_retry_attempts: 5
+
+# ------------------------------------------------------------
+# 🧩 ROS2 INTEGRATION
+# ------------------------------------------------------------
+ros2:
+  enable_ros2: true
+  ros2_node_name: "raspberry_pi_node"
+  publish_topics:
+    - "/mayuri/ai/inference_output"
+    - "/mayuri/system/temperature"
+    - "/mayuri/sensors/data"
+  subscribe_topics:
+    - "/mayuri/command/ai"
+    - "/mayuri/config/update"
+  launch_on_boot: true
+  enable_logging: true
+
+# ------------------------------------------------------------
+# 🧾 LOGGING & MONITORING
+# ------------------------------------------------------------
+logging:
+  enable_detailed_logs: true
+  log_path: "logs/hardware/raspberry_pi.log"
+  log_rotation_days: 5
+  compress_logs: true
+  upload_logs: true
+  upload_endpoint: "https://mayuri-control-center.local/upload_pi_logs"
+
+monitoring:
+  enable_system_monitor: true
+  monitor_cpu_temp: true
+  monitor_memory_usage: true
+  monitor_network_latency: true
+  telemetry_interval_s: 10
+  system_health_topic: "/mayuri/system/pi_health"
+
+# ------------------------------------------------------------
+# 🧠 COMPATIBILITY & DEPENDENCIES
+# ------------------------------------------------------------
+compatibility:
+  supported_os:
+    - "Raspberry Pi OS 64-bit"
+    - "Debian 12 (ARM64)"
+  supported_frameworks:
+    - "TensorFlow Lite"
+    - "PyCoral API"
+    - "OpenCV 4.5+"
+  requires_packages:
+    - "tflite-runtime"
+    - "pycoral"
+    - "opencv-python"
+    - "numpy"
+    - "cryptography"
+    - "rclpy"
+
+# ------------------------------------------------------------
+# 🧩 BACKUP & RECOVERY
+# ------------------------------------------------------------
+backup:
+  enable_auto_backup: true
+  backup_interval_hours: 8
+  backup_directory: "backups/hardware/raspberry_pi/"
+  compress_before_upload: true
+  remote_backup_enabled: true
+  remote_backup_endpoint: "https://mayuri-backup-server.local/pi"
+  verify_backup_integrity: true
+  restore_on_reboot: false
+
+# ------------------------------------------------------------
+# ✅ END OF CONFIGURATION
+# ------------------------------------------------------------

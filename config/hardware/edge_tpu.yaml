@@ -1,0 +1,124 @@
+# ============================================================
+# MAYURI EDGE TPU CONFIGURATION
+# ============================================================
+# Author: Shree Praveen(@p_rav_ee_n1082)
+# Description:
+#   Hardware configuration and optimization parameters
+#   for AI inference using Google Coral Edge TPU / USB Accelerator.
+# ============================================================
+
+version: 1.2
+last_updated: 2025-10-22
+
+# ------------------------------------------------------------
+# ⚙️ HARDWARE DETAILS
+# ------------------------------------------------------------
+hardware:
+  name: "Google_Coral_Edge_TPU"
+  type: "usb_accelerator"
+  architecture: "EdgeTPU-v2"
+  interface: "USB 3.0"
+  driver_package: "libedgetpu1-std"
+  firmware_version: "2.1.4"
+  system_bus: "PCIe/USB"
+  power_mode: "balanced"     # options: [low_power, balanced, performance]
+  max_power_watts: 15
+  cooling_required: true
+
+# ------------------------------------------------------------
+# 🧠 AI INFERENCE SETTINGS
+# ------------------------------------------------------------
+inference:
+  model_format: "tflite"
+  delegate: "edgetpu"
+  batch_size: 1
+  input_size: [320, 320, 3]
+  use_quantized_models: true
+  quantization_dtype: "uint8"
+  threads: 2
+  enable_fallback_to_cpu: true
+  cpu_fallback_threshold_ms: 120
+  supported_models:
+    - "ai_core/models/mobilenet_surveillance.tflite"
+    - "ai_core/models/thermal_detector.tflite"
+    - "ai_core/models/object_fusion_edge.tflite"
+
+# ------------------------------------------------------------
+# 🔒 SECURITY & ACCESS CONTROL
+# ------------------------------------------------------------
+security:
+  encrypt_model_files: true
+  encryption_key_ref: "MAYURI_AI_004"
+  verify_hash_on_load: true
+  model_hash_algorithm: "SHA3-512"
+  sandbox_execution: true
+  restrict_external_usb_access: true
+
+# ------------------------------------------------------------
+# ⚡ PERFORMANCE OPTIMIZATION
+# ------------------------------------------------------------
+performance:
+  temperature_limit_c: 70
+  cooling_policy: "adaptive_fan"
+  inference_rate_limit_fps: 20
+  memory_buffer_mb: 512
+  preallocate_inference_cache: true
+  use_dma_transfer: true
+  optimize_tensor_allocation: true
+  disable_idle_power_saving: false
+
+# ------------------------------------------------------------
+# 🔧 SYSTEM INTEGRATION
+# ------------------------------------------------------------
+integration:
+  detection_topic: "/mayuri/ai/inference_output"
+  performance_monitor_topic: "/mayuri/system/edgetpu_stats"
+  use_ros2_node: true
+  ros2_node_name: "edge_tpu_inference_node"
+  enable_telemetry_reporting: true
+  telemetry_interval_s: 15
+
+# ------------------------------------------------------------
+# 🧩 DIAGNOSTICS & HEALTH MONITORING
+# ------------------------------------------------------------
+diagnostics:
+  log_inference_latency: true
+  log_path: "logs/hardware/edge_tpu_performance.log"
+  thermal_monitoring: true
+  temperature_check_interval_s: 5
+  auto_throttle_on_overheat: true
+  throttle_temperature_c: 75
+  shutdown_temperature_c: 85
+
+# ------------------------------------------------------------
+# 🧠 COMPATIBILITY & DEPENDENCIES
+# ------------------------------------------------------------
+compatibility:
+  supported_os:
+    - "Ubuntu 20.04"
+    - "Debian 11"
+    - "Raspbian Bullseye"
+  supported_frameworks:
+    - "TensorFlow Lite"
+    - "OpenCV 4.5+"
+    - "PyCoral API"
+  requires_packages:
+    - "python3-pycoral"
+    - "tflite-runtime"
+    - "libedgetpu1-std"
+    - "opencv-python"
+    - "numpy"
+
+# ------------------------------------------------------------
+# 🧾 LOGGING & BACKUP POLICY
+# ------------------------------------------------------------
+logging:
+  enable_detailed_logs: true
+  log_rotation_days: 7
+  compress_logs: true
+  backup_logs_to_server: true
+  backup_endpoint: "https://mayuri-control-center.local/upload_hardware_logs"
+
+# ------------------------------------------------------------
+# ✅ END OF CONFIGURATION
+# ------------------------------------------------------------

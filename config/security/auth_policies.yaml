@@ -1,0 +1,173 @@
+# ============================================================
+# MAYURI AUTHORIZATION & SECURITY POLICY CONFIGURATION
+# ============================================================
+# Author: Shree Praveen(@p_rav_ee_n1082)
+# Description:
+#   Centralized security rules for user authentication,
+#   inter-module authorization, and API access.
+#   Applied by modules under /src/communication/, /core/, and /ui_control/.
+# ============================================================
+
+version: 1.2
+last_updated: 2025-10-22
+
+# ------------------------------------------------------------
+# 🔐 AUTHENTICATION MODES
+# ------------------------------------------------------------
+auth_modes:
+  # Basic password-based (for simulation/local use)
+  password:
+    enabled: true
+    hash_algorithm: "bcrypt"
+    min_length: 12
+    allow_default_passwords: false
+
+  # Token-based (recommended for real deployments)
+  token:
+    enabled: true
+    token_type: "JWT"
+    secret_key_env: "MAYURI_SECRET_KEY"
+    expiration_minutes: 45
+    refresh_allowed: true
+
+  # Biometric-based (for operator control units)
+  biometric:
+    enabled: true
+    device_id: "MAYURI-BIO-001"
+    retries_allowed: 3
+
+  # Mutual certificate-based authentication (for drone ↔ base communication)
+  certificate:
+    enabled: true
+    ca_file: "config/security/certs/ca.crt"
+    cert_expiry_days_warning: 15
+
+# ------------------------------------------------------------
+# 👤 USER ROLES & ACCESS LEVELS
+# ------------------------------------------------------------
+roles:
+  - name: "operator"
+    description: "Standard field operator controlling drone missions"
+    permissions:
+      - "launch_mission"
+      - "view_camera_feed"
+      - "receive_alerts"
+      - "execute_manual_override"
+
+  - name: "supervisor"
+    description: "Supervisory officer with mission control permissions"
+    permissions:
+      - "launch_mission"
+      - "abort_mission"
+      - "update_firmware"
+      - "access_logs"
+      - "manage_operators"
+
+  - name: "developer"
+    description: "System engineer or developer for internal testing"
+    permissions:
+      - "debug_mode"
+      - "access_ai_core"
+      - "simulate_environment"
+      - "test_sensor_modules"
+
+  - name: "autonomous_ai"
+    description: "AI subsystem performing independent decisions"
+    permissions:
+      - "analyze_threats"
+      - "trigger_alerts"
+      - "execute_defensive_action"
+      - "request_failsafe_landing"
+
+# ------------------------------------------------------------
+# 🧱 MODULE ACCESS CONTROL (RBAC)
+# ------------------------------------------------------------
+module_access:
+  ai_core:
+    required_roles: ["developer", "autonomous_ai"]
+    encryption_required: true
+
+  navigation:
+    required_roles: ["operator", "supervisor", "autonomous_ai"]
+    encryption_required: true
+
+  communication:
+    required_roles: ["supervisor", "developer"]
+    encryption_required: true
+
+  sensors:
+    required_roles: ["operator", "developer"]
+    encryption_required: false
+
+  ui_control:
+    required_roles: ["operator", "supervisor"]
+    encryption_required: true
+
+  core:
+    required_roles: ["supervisor"]
+    encryption_required: true
+
+# ------------------------------------------------------------
+# ⏱️ SESSION MANAGEMENT
+# ------------------------------------------------------------
+session:
+  idle_timeout_minutes: 20
+  max_concurrent_sessions_per_user: 2
+  revoke_on_role_change: true
+  audit_log_enabled: true
+  audit_log_path: "logs/security/audit.log"
+
+# ------------------------------------------------------------
+# 🚨 SECURITY RESPONSES
+# ------------------------------------------------------------
+alerts:
+  unauthorized_access:
+    action: "lock_system"
+    alert_level: "critical"
+    notify_roles: ["supervisor"]
+    log_event: true
+
+  repeated_login_failures:
+    action: "temporary_block"
+    duration_minutes: 10
+    attempts_threshold: 5
+    log_event: true
+
+  certificate_expiry_warning:
+    action: "notify_admin"
+    alert_level: "warning"
+    log_event: true
+
+# ------------------------------------------------------------
+# 🔒 ENCRYPTION & KEYS
+# ------------------------------------------------------------
+encryption:
+  symmetric:
+    algorithm: "AES-256-GCM"
+    key_file: "config/security/aes_keys.json"
+  asymmetric:
+    algorithm: "RSA"
+    key_length: 4096
+  communication_protocols:
+    allowed: ["TLS1.3", "HTTPS", "MQTT-S", "ROS2 DDS Secure"]
+  data_integrity_check: "SHA3-512"
+
+# ------------------------------------------------------------
+# 🧩 INTEGRATION SECURITY
+# ------------------------------------------------------------
+integration_policies:
+  external_api:
+    require_signed_requests: true
+    max_request_rate_per_minute: 30
+    allowed_origins: ["https://mayuri-control-center.local"]
+  firmware_updates:
+    verify_signature: true
+    signature_algorithm: "Ed25519"
+  telemetry:
+    encrypt_logs: true
+    compress_before_upload: true
+    upload_interval_minutes: 30
+
+# ------------------------------------------------------------
+# ✅ POLICY END
+# ------------------------------------------------------------

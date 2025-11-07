@@ -1,0 +1,183 @@
+# ============================================================
+# MAYURI RESCUE OPERATION MISSION CONFIGURATION
+# ============================================================
+# Author: Shree Praveen(@p_rav_ee_n1082)
+# Description:
+#   Defines behavior, detection logic, and communication rules
+#   for autonomous humanitarian search-and-rescue missions.
+# ============================================================
+
+version: 1.2
+last_updated: 2025-10-22
+
+# ------------------------------------------------------------
+# 🚁 MISSION PARAMETERS
+# ------------------------------------------------------------
+mission:
+  name: "Disaster_Rescue_Zone_B"
+  mission_type: "search_and_rescue"
+  environment: "mountainous"
+  max_duration_minutes: 90
+  loop_route: false
+  dynamic_area_expansion: true
+  enable_logging: true
+  priority_level: "critical"
+  operator_confirmation_required: false
+  return_to_base_on_complete: true
+
+# ------------------------------------------------------------
+# 📍 WAYPOINTS (latitude, longitude, altitude)
+# ------------------------------------------------------------
+waypoints:
+  - { lat: 30.7420, lon: 79.4800, alt: 80 }
+  - { lat: 30.7428, lon: 79.4825, alt: 78 }
+  - { lat: 30.7445, lon: 79.4840, alt: 75 }
+  - { lat: 30.7460, lon: 79.4860, alt: 72 }
+
+search_grid:
+  enabled: true
+  grid_spacing_m: 30
+  overlap_percentage: 20
+  coverage_strategy: "lawnmower_pattern"
+  adaptive_replan_on_detection: true
+
+# ------------------------------------------------------------
+# 🔥 SURVIVOR DETECTION SETTINGS
+# ------------------------------------------------------------
+detection:
+  ai_model: "ai_core/models/thermal_detector.pt"
+  fusion_model: "ai_core/models/fusion_engine.onnx"
+  detection_interval_s: 2
+  confidence_threshold: 0.5
+  alert_on_detection: true
+  record_detection_clip: true
+  detection_clip_duration_s: 8
+  highlight_color: "green"
+  auto_tag_location: true
+
+thermal_analysis:
+  enabled: true
+  min_temperature_c: 28.0
+  max_temperature_c: 42.0
+  temperature_anomaly_margin_c: 1.5
+  detect_static_heat_signatures: true
+  detect_moving_targets: true
+  thermal_alert_topic: "/mayuri/thermal/alerts"
+
+motion_analysis:
+  enabled: true
+  sensitivity: 0.7
+  stabilization_filter: "Kalman"
+  min_movement_pixels: 30
+  confirm_motion_frames: 4
+
+# ------------------------------------------------------------
+# 🧠 AI BEHAVIOR & CONTEXTUAL ADAPTATION
+# ------------------------------------------------------------
+ai_behavior:
+  search_pattern: "spiral"
+  reidentify_survivor: true
+  predictive_path_replan: true
+  safe_zone_detection: true
+  avoid_smoke_zones: true
+  lost_target_recovery: "sweep_search"
+  update_rate_hz: 8
+
+context_awareness:
+  auto_environment_detection: true
+  profiles:
+    - name: "day"
+      camera_priority: 0.6
+      thermal_weight: 0.4
+    - name: "night"
+      camera_priority: 0.2
+      thermal_weight: 0.8
+    - name: "rain"
+      lidar_noise_filter: 1.3
+      radar_weight_boost: 0.3
+  adaptive_switch: true
+  condition_metric: "light_level"
+
+# ------------------------------------------------------------
+# 🧭 NAVIGATION & FLIGHT CONTROL
+# ------------------------------------------------------------
+navigation:
+  max_speed_mps: 10
+  cruise_speed_mps: 7
+  min_altitude_m: 20
+  max_altitude_m: 100
+  hover_on_detection: true
+  hover_duration_s: 15
+  safe_landing_altitude_m: 3
+  terrain_following: true
+  gps_update_rate_hz: 5
+
+# ------------------------------------------------------------
+# 🧩 SENSOR CONFIGURATION
+# ------------------------------------------------------------
+sensors:
+  lidar: true
+  radar: true
+  thermal_camera: true
+  rgb_camera: true
+  imu_stabilization: true
+  barometer: true
+  sensor_fusion_topic: "/mayuri/fusion/rescue"
+
+# ------------------------------------------------------------
+# 📡 COMMUNICATION SETTINGS
+# ------------------------------------------------------------
+communication:
+  telemetry_topic: "/mayuri/telemetry/rescue"
+  status_report_interval_s: 20
+  encryption_required: true
+  retry_on_failure: true
+  send_alerts_to: "/mayuri/alerts/rescue"
+  remote_command_channel: "/mayuri/command/rescue"
+  server_endpoint: "https://mayuri-control-center.local/rescue"
+  upload_interval_s: 60
+
+# ------------------------------------------------------------
+# 🚨 ALERTS & LOGGING
+# ------------------------------------------------------------
+alerts:
+  ui_alerts: true
+  sound_alerts: true
+  vibration_feedback: false
+  alert_log_path: "logs/missions/rescue_alerts.log"
+  upload_alerts: true
+
+logging:
+  mission_log_path: "logs/missions/rescue_mission.log"
+  enable_detailed_logs: true
+  compress_after_upload: true
+  upload_logs: true
+
+# ------------------------------------------------------------
+# 🛡️ FAILSAFE & RECOVERY
+# ------------------------------------------------------------
+failsafe:
+  low_battery_threshold_percent: 22
+  communication_loss_timeout_s: 45
+  gps_loss_timeout_s: 15
+  retry_connection: true
+  safe_return_altitude_m: 60
+  landing_behavior: "hover_and_descend"
+  alert_operator_on_trigger: true
+  log_failsafe_events: true
+
+# ------------------------------------------------------------
+# 🤝 COORDINATION WITH GROUND TEAMS
+# ------------------------------------------------------------
+coordination:
+  broadcast_survivor_locations: true
+  location_broadcast_topic: "/mayuri/rescue/locations"
+  location_update_interval_s: 10
+  voice_broadcast_enabled: true
+  message_format: "JSON"
+  include_coordinates_in_alerts: true
+  emergency_signal_pattern: "SOS"
+
+# ------------------------------------------------------------
+# ✅ END OF CONFIGURATION
+# ------------------------------------------------------------

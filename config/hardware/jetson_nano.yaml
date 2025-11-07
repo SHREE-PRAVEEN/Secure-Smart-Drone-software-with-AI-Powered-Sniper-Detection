@@ -1,0 +1,184 @@
+# ============================================================
+# MAYURI JETSON NANO HARDWARE CONFIGURATION
+# ============================================================
+# Author: Shree Praveen(@p_rav_ee_n1082)
+# Description:
+#   Defines Jetson Nano (and other Jetson devices) setup,
+#   GPU acceleration, AI optimization, and monitoring rules.
+# ============================================================
+
+version: 1.5
+last_updated: 2025-10-22
+
+# ------------------------------------------------------------
+# ⚙️ HARDWARE DETAILS
+# ------------------------------------------------------------
+hardware:
+  name: "NVIDIA_Jetson_Nano"
+  architecture: "ARM64"
+  soc: "Tegra X1"
+  cuda_cores: 128
+  gpu_driver: "CUDA 11.4"
+  cudnn_version: "8.6.0"
+  tensor_rt_version: "8.5.2"
+  memory_gb: 4
+  storage_gb: 64
+  os: "Ubuntu 20.04 L4T"
+  power_mode: "MAXN"      # Options: [5W, 10W, MAXN]
+  cooling_required: true
+  fan_control: true
+  swap_enabled: true
+  swap_size_gb: 2
+
+# ------------------------------------------------------------
+# 🧠 AI INFERENCE SETTINGS
+# ------------------------------------------------------------
+inference:
+  framework: "TensorRT"
+  precision: "FP16"
+  use_gpu_acceleration: true
+  batch_size: 1
+  async_inference: true
+  enable_memory_pinning: true
+  optimize_model_on_startup: true
+  supported_models:
+    - "ai_core/models/yolo_defense.onnx"
+    - "ai_core/models/thermal_detector.pt"
+    - "ai_core/models/mobilenet_surveillance.tflite"
+  fallback_to_cpu: true
+  inference_topic: "/mayuri/ai/jetson_inference"
+  telemetry_topic: "/mayuri/system/jetson_stats"
+
+# ------------------------------------------------------------
+# 🔒 SECURITY & ENCRYPTION
+# ------------------------------------------------------------
+security:
+  encrypt_models: true
+  model_encryption_key_ref: "MAYURI_AI_004"
+  verify_hash_before_inference: true
+  secure_boot: true
+  sandbox_execution: true
+  restrict_external_usb_access: true
+  disable_remote_ssh_by_default: true
+  signed_model_policy: true
+
+# ------------------------------------------------------------
+# ⚡ PERFORMANCE OPTIMIZATION
+# ------------------------------------------------------------
+performance:
+  gpu_governor: "performance"
+  max_gpu_freq_mhz: 921
+  max_cpu_freq_mhz: 1479
+  enable_jetson_clocks: true
+  auto_throttle_on_overheat: true
+  throttle_temperature_c: 80
+  shutdown_temperature_c: 90
+  temperature_check_interval_s: 5
+  cooling_policy: "adaptive_fan"
+  memory_swap_threshold_percent: 85
+  preallocate_gpu_buffers: true
+  enable_zerocopy_memory: true
+
+# ------------------------------------------------------------
+# 🧩 SENSOR INTEGRATION
+# ------------------------------------------------------------
+sensors:
+  camera_interface: "CSI"
+  supported_cameras:
+    - "IMX219"
+    - "IMX477"
+    - "Lepton_3.5_Thermal"
+  imu_interface: "I2C"
+  lidar_interface: "USB"
+  radar_interface: "UART"
+  frame_sync_tolerance_ms: 30
+  fusion_topic: "/mayuri/fusion/jetson_data"
+
+# ------------------------------------------------------------
+# 📡 NETWORK & COMMUNICATION
+# ------------------------------------------------------------
+network:
+  wifi_interface: "wlan0"
+  ethernet_interface: "eth0"
+  hotspot_enabled: true
+  encryption_protocol: "AES-256-GCM"
+  mesh_network_enabled: true
+  mesh_sync_topic: "/mayuri/mesh/sync"
+  telemetry_topic: "/mayuri/telemetry/jetson"
+  control_channel: "/mayuri/command/jetson"
+  connection_retry_interval_s: 10
+  heartbeat_interval_s: 5
+
+# ------------------------------------------------------------
+# 🧩 ROS2 INTEGRATION
+# ------------------------------------------------------------
+ros2:
+  enable_ros2: true
+  ros2_node_name: "jetson_ai_node"
+  publish_topics:
+    - "/mayuri/ai/inference_output"
+    - "/mayuri/system/temperature"
+    - "/mayuri/system/resource_usage"
+  subscribe_topics:
+    - "/mayuri/command/ai"
+    - "/mayuri/config/update"
+  launch_on_boot: true
+  enable_logging: true
+
+# ------------------------------------------------------------
+# 🧾 LOGGING & MONITORING
+# ------------------------------------------------------------
+logging:
+  enable_detailed_logs: true
+  log_path: "logs/hardware/jetson_nano.log"
+  log_rotation_days: 5
+  compress_logs: true
+  backup_logs_to_server: true
+  backup_endpoint: "https://mayuri-control-center.local/upload_jetson_logs"
+
+monitoring:
+  enable_system_monitor: true
+  monitor_gpu_usage: true
+  monitor_cpu_temp: true
+  monitor_memory_usage: true
+  monitor_fan_speed: true
+  telemetry_interval_s: 10
+  system_health_topic: "/mayuri/system/health"
+
+# ------------------------------------------------------------
+# 🧠 COMPATIBILITY & DEPENDENCIES
+# ------------------------------------------------------------
+compatibility:
+  supported_os:
+    - "Ubuntu 18.04 L4T"
+    - "Ubuntu 20.04 L4T"
+  supported_frameworks:
+    - "TensorRT 8+"
+    - "PyTorch 2.0+"
+    - "OpenCV 4.5+"
+  requires_packages:
+    - "tensorrt"
+    - "torch"
+    - "torchvision"
+    - "opencv-python"
+    - "numpy"
+    - "pycuda"
+    - "cryptography"
+    - "jetson-stats"
+
+# ------------------------------------------------------------
+# 🧩 BACKUP & RECOVERY
+# ------------------------------------------------------------
+backup:
+  enable_auto_backup: true
+  backup_interval_hours: 6
+  backup_directory: "backups/hardware/jetson_nano/"
+  compress_before_upload: true
+  remote_backup_enabled: true
+  remote_backup_endpoint: "https://mayuri-backup-server.local/jetson"
+  verify_backup_integrity: true
+  on_restore_reboot: true
+
+# ------------------------------------------------------------
+# ✅ END OF CONFIGURATION
+# ------------------------------------------------------------

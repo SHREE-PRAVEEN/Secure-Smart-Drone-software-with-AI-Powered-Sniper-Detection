@@ -1,0 +1,160 @@
+# ============================================================
+# MAYURI THREAT TRACKING & RESPONSE CONFIGURATION
+# ============================================================
+# Author: Shree Praveen(@p_rav_ee_n1082)
+# Description:
+#   Defines AI behavior, risk assessment, and tracking logic
+#   for threat detection and autonomous response missions.
+# ============================================================
+
+version: 1.5
+last_updated: 2025-10-22
+
+# ------------------------------------------------------------
+# 🎯 THREAT DETECTION SETTINGS
+# ------------------------------------------------------------
+detection:
+  enabled: true
+  ai_model: "ai_core/models/yolo_defense.onnx"
+  detection_threshold: 0.6
+  max_detection_distance_m: 120
+  supported_classes: ["person", "vehicle", "drone", "weapon", "unknown"]
+  thermal_detection:
+    enabled: true
+    model: "ai_core/models/thermal_detector.pt"
+    temperature_threshold_c: 35.0
+  radar_correlation:
+    enabled: true
+    min_velocity_mps: 0.5
+    max_range_m: 100.0
+
+# ------------------------------------------------------------
+# 🧠 THREAT CLASSIFICATION
+# ------------------------------------------------------------
+classification:
+  method: "fusion_confidence_weighted"
+  class_weights:
+    person: 1.0
+    vehicle: 0.8
+    drone: 1.2
+    weapon: 1.5
+    unknown: 0.5
+  fusion_sources: ["camera", "radar", "lidar", "thermal"]
+  unknown_threshold: 0.4
+  confirm_after_frames: 5
+
+# ------------------------------------------------------------
+# 📍 TRACKING STRATEGY
+# ------------------------------------------------------------
+tracking:
+  enabled: true
+  tracker_type: "Kalman-3D"
+  max_lost_frames: 10
+  reidentify_after_loss: true
+  reid_model: "ai_core/models/mobilenet_surveillance.tflite"
+  predictive_movement: true
+  prediction_horizon_s: 3.0
+  update_rate_hz: 10
+  velocity_smoothing_factor: 0.3
+
+# ------------------------------------------------------------
+# 🚨 RISK ASSESSMENT & ALERTING
+# ------------------------------------------------------------
+risk_assessment:
+  scoring_model: "ai_core/models/radar_analyzer.pt"
+  danger_levels:
+    - name: "low"
+      color: "green"
+      confidence_min: 0.0
+      confidence_max: 0.4
+      actions: ["log_only"]
+    - name: "medium"
+      color: "yellow"
+      confidence_min: 0.4
+      confidence_max: 0.7
+      actions: ["log", "notify_operator"]
+    - name: "high"
+      color: "orange"
+      confidence_min: 0.7
+      confidence_max: 0.9
+      actions: ["notify_operator", "lock_target"]
+    - name: "critical"
+      color: "red"
+      confidence_min: 0.9
+      confidence_max: 1.0
+      actions: ["notify_operator", "autonomous_tracking", "trigger_defensive_mode"]
+
+alert_channels:
+  ui: true
+  sound: true
+  vibration: true
+  remote_console: true
+  log_to_file: "logs/threats/tracking_alerts.log"
+
+# ------------------------------------------------------------
+# 🛰️ RESPONSE ACTIONS
+# ------------------------------------------------------------
+response_actions:
+  autonomous_tracking:
+    maintain_distance_m: 30
+    orbit_mode: true
+    max_orbit_speed_mps: 8
+    lost_target_recovery: "spiral_search"
+    lost_target_timeout_s: 20
+
+  defensive_mode:
+    enabled: false     # NOTE: Enabled only in authorized zones
+    allowed_actions:
+      - "broadcast_location"
+      - "deploy_decoy"
+      - "signal_jammer"
+    restricted_actions:
+      - "offensive_response"
+    safety_lock: true
+
+# ------------------------------------------------------------
+# 🧩 SENSOR FUSION SETTINGS
+# ------------------------------------------------------------
+sensor_fusion:
+  fusion_mode: "weighted_average"
+  temporal_sync_tolerance_ms: 50
+  lidar_weight: 0.4
+  radar_weight: 0.3
+  camera_weight: 0.2
+  thermal_weight: 0.1
+  fusion_output_topic: "/mayuri/fusion/threats"
+
+# ------------------------------------------------------------
+# 📊 DATA LOGGING & ANALYTICS
+# ------------------------------------------------------------
+logging:
+  enable_raw_logs: true
+  raw_log_path: "logs/threats/raw/"
+  enable_summary_logs: true
+  summary_log_path: "logs/threats/summary/"
+  max_log_size_mb: 100
+  rotate_logs_days: 7
+  upload_to_server: true
+  server_endpoint: "https://mayuri-analytics.local/upload"
+
+# ------------------------------------------------------------
+# 🧠 AI CONTEXTUAL ADAPTATION
+# ------------------------------------------------------------
+context_awareness:
+  environment_profiles:
+    - name: "urban"
+      camera_confidence_boost: 0.1
+      radar_sensitivity_scale: 0.8
+    - name: "forest"
+      thermal_priority_boost: 0.3
+      lidar_noise_tolerance: 1.2
+    - name: "night"
+      thermal_confidence_boost: 0.5
+      camera_threshold_offset: -0.1
+  adaptive_mode: true
+  auto_profile_switch: true
+  switch_condition_metric: "ambient_light"
+
+# ------------------------------------------------------------
+# ✅ END OF CONFIGURATION
+# ------------------------------------------------------------

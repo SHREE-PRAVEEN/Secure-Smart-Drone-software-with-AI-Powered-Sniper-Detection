@@ -1,0 +1,160 @@
+# ============================================================
+# MAYURI INTEL NUC HARDWARE CONFIGURATION
+# ============================================================
+# Author: Shree Praveen(@p_rav_ee_n1082)
+# Description:
+#   Configuration file for Intel NUC-based ground control or
+#   AI processing systems used in MAYURI operations.
+# ============================================================
+
+version: 1.3
+last_updated: 2025-10-22
+
+# ------------------------------------------------------------
+# ⚙️ HARDWARE DETAILS
+# ------------------------------------------------------------
+hardware:
+  name: "Intel_NUC_13_Pro"
+  cpu: "Intel Core i7-1360P"
+  gpu: "Intel Iris Xe Graphics"
+  architecture: "x86_64"
+  ram_gb: 32
+  storage_gb: 1000
+  os: "Ubuntu 22.04 LTS"
+  power_mode: "performance"
+  cooling_required: true
+  enable_virtualization: true
+  hardware_acceleration: true
+
+# ------------------------------------------------------------
+# 🧠 AI INFERENCE SETTINGS
+# ------------------------------------------------------------
+inference:
+  acceleration_backend: "OpenVINO"
+  model_precision: "FP16"
+  batch_size: 2
+  inference_threads: 8
+  async_inference: true
+  optimize_memory_allocation: true
+  supported_models:
+    - "ai_core/models/yolo_defense.onnx"
+    - "ai_core/models/mobilenet_surveillance.tflite"
+    - "ai_core/models/radar_analyzer.pt"
+  use_gpu_acceleration: true
+  fallback_to_cpu: true
+  inference_topic: "/mayuri/ai/intel_nuc_inference"
+  telemetry_topic: "/mayuri/system/nuc_telemetry"
+
+# ------------------------------------------------------------
+# 🔒 SECURITY & ENCRYPTION
+# ------------------------------------------------------------
+security:
+  encrypt_models: true
+  model_encryption_key_ref: "MAYURI_CORE_001"
+  verify_hash_before_inference: true
+  sandbox_inference_execution: true
+  allow_unsigned_code: false
+  enable_secure_boot: true
+  enable_tpm_verification: true
+  restricted_usb_access: true
+
+# ------------------------------------------------------------
+# ⚡ PERFORMANCE OPTIMIZATION
+# ------------------------------------------------------------
+performance:
+  cpu_governor: "performance"
+  gpu_driver_version: "2025.2"
+  openvino_version: "2025.1.1"
+  enable_thread_pinning: true
+  max_cpu_temp_c: 85
+  cooling_policy: "smart_fan_control"
+  temperature_check_interval_s: 10
+  auto_throttle_on_overheat: true
+  throttle_cpu_temp_c: 90
+  shutdown_temp_c: 95
+  enable_memory_prefetch: true
+
+# ------------------------------------------------------------
+# 📡 NETWORK & COMMUNICATION
+# ------------------------------------------------------------
+network:
+  primary_interface: "eth0"
+  backup_interface: "wlan0"
+  ipv6_enabled: false
+  encryption_protocol: "TLSv1.3"
+  mesh_sync_enabled: true
+  mesh_network_topic: "/mayuri/mesh/sync"
+  heartbeat_interval_s: 15
+  connection_retry_interval_s: 10
+  max_retry_attempts: 5
+  remote_command_port: 8080
+  telemetry_upload_endpoint: "https://mayuri-control-center.local/telemetry"
+
+# ------------------------------------------------------------
+# 🧩 SYSTEM INTEGRATION
+# ------------------------------------------------------------
+integration:
+  enable_ros2: true
+  ros2_node_name: "intel_nuc_node"
+  publish_performance_metrics: true
+  monitor_topics:
+    - "/mayuri/ai/inference_output"
+    - "/mayuri/system/health"
+    - "/mayuri/network/status"
+  command_subscribe_topic: "/mayuri/command/base"
+  log_upload_topic: "/mayuri/logs/upload"
+
+# ------------------------------------------------------------
+# 🧾 LOGGING & MONITORING
+# ------------------------------------------------------------
+logging:
+  enable_detailed_logs: true
+  log_path: "logs/hardware/intel_nuc_system.log"
+  log_rotation_days: 10
+  compress_logs: true
+  backup_logs_to_server: true
+  backup_endpoint: "https://mayuri-control-center.local/upload_hardware_logs"
+
+monitoring:
+  enable_system_monitor: true
+  monitor_cpu_temp: true
+  monitor_gpu_usage: true
+  monitor_memory_usage: true
+  monitor_network_latency: true
+  telemetry_interval_s: 15
+  report_to_topic: "/mayuri/system/diagnostics"
+
+# ------------------------------------------------------------
+# 🧠 COMPATIBILITY & DEPENDENCIES
+# ------------------------------------------------------------
+compatibility:
+  supported_os:
+    - "Ubuntu 20.04"
+    - "Ubuntu 22.04"
+    - "Debian 12"
+  supported_frameworks:
+    - "OpenVINO 2025.1+"
+    - "PyTorch 2.3+"
+    - "TensorFlow 2.16+"
+  requires_packages:
+    - "intel-openvino-dev"
+    - "opencv-python"
+    - "numpy"
+    - "paho-mqtt"
+    - "cryptography"
+
+# ------------------------------------------------------------
+# 🧩 BACKUP & RECOVERY
+# ------------------------------------------------------------
+backup:
+  enable_auto_backup: true
+  backup_interval_hours: 12
+  backup_directory: "backups/hardware/intel_nuc/"
+  remote_backup_enabled: true
+  remote_backup_endpoint: "https://mayuri-backup-server.local/nuc"
+  compress_before_upload: true
+  verify_backup_integrity: true
+
+# ------------------------------------------------------------
+# ✅ END OF CONFIGURATION
+# ------------------------------------------------------------

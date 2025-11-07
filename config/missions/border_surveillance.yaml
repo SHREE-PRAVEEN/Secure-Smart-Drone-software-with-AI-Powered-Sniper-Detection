@@ -1,0 +1,179 @@
+# ============================================================
+# MAYURI BORDER SURVEILLANCE MISSION CONFIGURATION
+# ============================================================
+# Author: Shree Praveen(@p_rav_ee_n1082)
+# Description:
+#   Defines long-range surveillance, route mapping,
+#   detection logic, and secure communication protocols
+#   for continuous border monitoring.
+# ============================================================
+
+version: 1.3
+last_updated: 2025-10-22
+
+# ------------------------------------------------------------
+# 🌐 MISSION PARAMETERS
+# ------------------------------------------------------------
+mission:
+  name: "Border_Surveillance_Sector_05"
+  mission_type: "continuous_surveillance"
+  environment: "desert"
+  max_duration_minutes: 180
+  loop_route: true
+  standby_mode_enabled: true
+  return_to_base_on_low_battery: true
+  priority_level: "high"
+  enable_logging: true
+
+# ------------------------------------------------------------
+# 📍 WAYPOINTS (latitude, longitude, altitude in meters)
+# ------------------------------------------------------------
+waypoints:
+  - { lat: 26.8900, lon: 75.7701, alt: 70 }
+  - { lat: 26.8925, lon: 75.7750, alt: 72 }
+  - { lat: 26.8950, lon: 75.7800, alt: 68 }
+  - { lat: 26.8970, lon: 75.7840, alt: 70 }
+  - { lat: 26.8995, lon: 75.7885, alt: 75 }
+
+surveillance_zones:
+  detection_radius_m: 200
+  alert_threshold: 0.6
+  revisit_interval_s: 20
+  overlap_check: true
+  no_fly_zones:
+    - { lat: 26.8940, lon: 75.7775, radius_m: 80 }
+
+# ------------------------------------------------------------
+# 🎥 SURVEILLANCE SETTINGS
+# ------------------------------------------------------------
+surveillance:
+  rgb_camera_topic: "/mayuri/camera/rgb"
+  thermal_camera_topic: "/mayuri/camera/thermal"
+  radar_topic: "/mayuri/radar/raw"
+  lidar_topic: "/mayuri/lidar/scan"
+  fusion_output_topic: "/mayuri/fusion/surveillance"
+  ai_detection:
+    enabled: true
+    model: "ai_core/models/yolo_defense.onnx"
+    confidence_threshold: 0.55
+    detection_interval_s: 2
+    log_detections: true
+    alert_on_threat: true
+  recording:
+    enable_recording: true
+    storage_path: "logs/missions/border_video/"
+    segment_duration_min: 5
+    compress_video: true
+
+# ------------------------------------------------------------
+# 🧠 AI BEHAVIOR & RESPONSE
+# ------------------------------------------------------------
+ai_behavior:
+  multi_target_tracking: true
+  reidentify_after_loss: true
+  target_tracking_model: "ai_core/models/mobilenet_surveillance.tflite"
+  threat_prediction_enabled: true
+  prediction_horizon_s: 4.0
+  tracking_update_rate_hz: 10
+  lock_on_confidence_threshold: 0.75
+  classify_unknown_as: "low_risk"
+
+# ------------------------------------------------------------
+# 📡 COMMUNICATION & NETWORK
+# ------------------------------------------------------------
+communication:
+  telemetry_topic: "/mayuri/telemetry/border"
+  encryption_required: true
+  retry_on_failure: true
+  secure_protocol: "AES-256-GCM"
+  status_report_interval_s: 60
+  alert_broadcast_topic: "/mayuri/alerts/border"
+  command_channel: "/mayuri/command/mission_control"
+  heartbeat_interval_s: 10
+  failover_node: "backup_station_alpha"
+
+# ------------------------------------------------------------
+# 🧭 NAVIGATION SETTINGS
+# ------------------------------------------------------------
+navigation:
+  flight_mode: "autonomous"
+  max_speed_mps: 14
+  cruise_speed_mps: 10
+  min_altitude_m: 40
+  max_altitude_m: 90
+  hold_position_tolerance_m: 1.0
+  gps_update_rate_hz: 5
+  maintain_safe_distance_m: 25
+  terrain_following: true
+  dynamic_replan_on_threat: true
+
+# ------------------------------------------------------------
+# 🧩 SENSOR FUSION CONFIGURATION
+# ------------------------------------------------------------
+sensor_fusion:
+  fusion_mode: "weighted_confidence"
+  radar_weight: 0.3
+  lidar_weight: 0.3
+  camera_weight: 0.25
+  thermal_weight: 0.15
+  sync_tolerance_ms: 80
+  outlier_rejection_enabled: true
+  output_topic: "/mayuri/fusion/border"
+
+# ------------------------------------------------------------
+# 🛡️ FAILSAFE & RECOVERY LOGIC
+# ------------------------------------------------------------
+failsafe:
+  low_battery_threshold_percent: 25
+  communication_loss_timeout_s: 90
+  gps_loss_timeout_s: 20
+  max_wind_speed_mps: 12
+  safe_altitude_m: 60
+  retry_connection_attempts: 3
+  return_to_base_behavior: "priority_safe_path"
+  auto_land_on_critical_failure: true
+  alert_operator_on_trigger: true
+  log_failsafe_events: true
+
+# ------------------------------------------------------------
+# 🚨 ALERT MANAGEMENT
+# ------------------------------------------------------------
+alerts:
+  enable_visual_alerts: true
+  enable_audio_alerts: false
+  vibration_feedback: false
+  alert_log_path: "logs/missions/border_alerts.log"
+  upload_alerts: true
+  alert_server_endpoint: "https://mayuri-control-center.local/upload_alerts"
+
+# ------------------------------------------------------------
+# 📊 DATA LOGGING & UPLOAD
+# ------------------------------------------------------------
+logging:
+  mission_log_path: "logs/missions/border_mission.log"
+  enable_detailed_logs: true
+  compress_after_upload: true
+  upload_logs: true
+  log_server_endpoint: "https://mayuri-control-center.local/upload_logs"
+
+# ------------------------------------------------------------
+# 🧠 CONTEXTUAL ADAPTATION
+# ------------------------------------------------------------
+context_awareness:
+  auto_environment_detection: true
+  environment_profiles:
+    - name: "day"
+      camera_boost: 0.2
+      radar_noise_filter: 1.0
+    - name: "night"
+      thermal_priority_boost: 0.4
+      camera_confidence_offset: -0.15
+    - name: "fog"
+      radar_weight_boost: 0.25
+      lidar_noise_reduction: true
+  auto_profile_switch: true
+  switch_condition_metric: "visibility_level"
+
+# ------------------------------------------------------------
+# ✅ END OF CONFIGURATION
+# ------------------------------------------------------------

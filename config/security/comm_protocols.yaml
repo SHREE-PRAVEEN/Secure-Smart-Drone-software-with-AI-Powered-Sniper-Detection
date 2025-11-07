@@ -1,0 +1,166 @@
+# ============================================================
+# MAYURI COMMUNICATION PROTOCOL CONFIGURATION
+# ============================================================
+# Author: Shree Praveen(@p_rav_ee_n1082)
+# Description:
+#   Defines secure communication channels, protocols,
+#   and network behaviors for all MAYURI subsystems.
+# ============================================================
+
+version: 2.0
+last_updated: 2025-10-22
+
+# ------------------------------------------------------------
+# 🌐 NETWORK CONFIGURATION
+# ------------------------------------------------------------
+network:
+  mode: "hybrid"   # options: wifi | mesh | satellite | hybrid
+  interfaces:
+    - name: "eth0"
+      type: "ethernet"
+      priority: 1
+      mtu: 1500
+    - name: "wlan0"
+      type: "wifi"
+      ssid: "MAYURI-NET"
+      encryption: "WPA3"
+      priority: 2
+    - name: "mesh0"
+      type: "802.11s-mesh"
+      frequency: "5GHz"
+      priority: 3
+
+  fallback:
+    enabled: true
+    retry_interval_seconds: 10
+    max_retries: 5
+    switch_to_satellite_if_unreachable: true
+
+# ------------------------------------------------------------
+# 🔒 ENCRYPTION & AUTHENTICATION
+# ------------------------------------------------------------
+encryption:
+  protocol: "TLS1.3"
+  key_exchange: "ECDHE"
+  cipher_suite: "AES-256-GCM-SHA384"
+  integrity_check: "SHA3-512"
+  use_mutual_tls: true
+  certs:
+    ca: "config/security/certs/ca.crt"
+    server_cert: "config/security/certs/server.crt"
+    client_cert: "config/security/certs/client.crt"
+    private_key: "config/security/certs/private.key"
+
+authentication:
+  mode: "JWT"
+  token_expiration_minutes: 45
+  secret_env: "MAYURI_SECRET_KEY"
+  allow_anonymous_nodes: false
+  node_identity_verification: true
+
+# ------------------------------------------------------------
+# 📡 COMMUNICATION CHANNELS
+# ------------------------------------------------------------
+channels:
+  telemetry:
+    protocol: "MQTT-S"
+    topic_prefix: "/mayuri/telemetry/"
+    qos: 2
+    retain: false
+    encryption_required: true
+    retry_interval_seconds: 5
+    max_buffer_size_kb: 512
+
+  command:
+    protocol: "ROS2-DDS"
+    topic_prefix: "/mayuri/command/"
+    qos: 1
+    auth_required: true
+    encryption_required: true
+    priority: "high"
+
+  video_stream:
+    protocol: "RTSP"
+    endpoint: "rtsp://base.mayuri.local:8554/live"
+    encryption: "SRTP"
+    compression: "H.265"
+    resolution: "1280x720"
+    frame_rate: 30
+    latency_tolerance_ms: 150
+
+  mesh_network:
+    protocol: "UDP"
+    port: 6060
+    discovery_method: "broadcast"
+    encryption: "AES-256-GCM"
+    heartbeat_interval_seconds: 3
+    auto_reconnect: true
+    max_hop_distance: 5
+
+  diagnostics:
+    protocol: "HTTPS"
+    endpoint: "https://mayuri-diagnostics.local/api"
+    cert_verification: true
+    log_upload_interval_minutes: 30
+    compression: "gzip"
+
+# ------------------------------------------------------------
+# 🧩 MESSAGE FORMATTING & SIGNING
+# ------------------------------------------------------------
+message_security:
+  signing_algorithm: "Ed25519"
+  include_timestamp: true
+  include_nonce: true
+  max_skew_seconds: 5
+  anti_replay_protection: true
+  payload_format: "JSON"
+  schema_version: "1.0"
+
+# ------------------------------------------------------------
+# ⚙️ RETRY & FAILOVER POLICIES
+# ------------------------------------------------------------
+retry_policy:
+  network_timeout_seconds: 5
+  message_retry_count: 3
+  exponential_backoff: true
+  max_delay_seconds: 30
+
+failover:
+  on_protocol_failure:
+    switch_to: "UDP-Fallback"
+    notify_module: "communication/secure_comms.py"
+  on_encryption_error:
+    action: "reinitialize_tls"
+  on_token_expiration:
+    action: "request_refresh"
+
+# ------------------------------------------------------------
+# 📊 TELEMETRY & LOGGING
+# ------------------------------------------------------------
+telemetry:
+  send_rate_hz: 2
+  compress_before_send: true
+  encryption_required: true
+  store_offline_if_no_network: true
+  max_offline_cache_mb: 100
+
+logging:
+  enabled: true
+  log_level: "INFO"
+  log_file: "logs/network/comm_protocol.log"
+  log_rotation_days: 7
+  log_remote_sync: true
+
+# ------------------------------------------------------------
+# 🔧 DEBUG & SIMULATION
+# ------------------------------------------------------------
+simulation:
+  allow_unencrypted_mode: false
+  allow_loopback_testing: true
+  fake_latency_ms: 20
+  packet_loss_percent: 0.5
+  log_simulated_traffic: true
+
+# ------------------------------------------------------------
+# ✅ END OF CONFIG
+# ------------------------------------------------------------

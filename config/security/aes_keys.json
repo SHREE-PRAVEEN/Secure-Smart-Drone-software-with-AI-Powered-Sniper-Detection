@@ -1,0 +1,73 @@
+{
+  "version": "2.0",
+  "last_updated": "2025-10-22",
+  "key_rotation_days": 30,
+  "default_algorithm": "AES-256-GCM",
+
+  "keys": {
+    "core_encryption": {
+      "key_id": "MAYURI_CORE_001",
+      "algorithm": "AES-256-GCM",
+      "created": "2025-10-01T00:00:00Z",
+      "valid_until": "2025-10-31T00:00:00Z",
+      "key_base64": "xLJgYH1aMZ4Q2p3kD7t0Zw9uSm1nJ6OpXj3+gL/7Y7E=",
+      "purpose": "Encrypt core mission files and diagnostics logs"
+    },
+
+    "comms_link": {
+      "key_id": "MAYURI_COMMS_002",
+      "algorithm": "AES-256-GCM",
+      "created": "2025-10-01T00:00:00Z",
+      "valid_until": "2025-10-31T00:00:00Z",
+      "key_base64": "QW1xPp5/ZjYvRCwK6i8+N1nSxTq9KxF8Ub4Zf0rE+qI=",
+      "purpose": "Encrypt drone ↔ base station communication links"
+    },
+
+    "telemetry_data": {
+      "key_id": "MAYURI_TLM_003",
+      "algorithm": "AES-256-GCM",
+      "created": "2025-10-01T00:00:00Z",
+      "valid_until": "2025-10-31T00:00:00Z",
+      "key_base64": "VnZr5m9UZ+43uCztq5AX9B7gIUs+DyP0NyojX9rRcmg=",
+      "purpose": "Encrypt telemetry, sensor, and navigation data"
+    },
+
+    "ai_data": {
+      "key_id": "MAYURI_AI_004",
+      "algorithm": "AES-256-GCM",
+      "created": "2025-10-01T00:00:00Z",
+      "valid_until": "2025-10-31T00:00:00Z",
+      "key_base64": "mNq3p7v4V8KzDc1H9lF8Rg7iCzPqVb5hL6t2+HsYzXw=",
+      "purpose": "Protect AI inference outputs, detections, and threat logs"
+    },
+
+    "video_stream": {
+      "key_id": "MAYURI_VIDEO_005",
+      "algorithm": "AES-256-GCM",
+      "created": "2025-10-01T00:00:00Z",
+      "valid_until": "2025-10-31T00:00:00Z",
+      "key_base64": "uZb6kD0pRf9+Gj2kTY0pB9sJjKqXf8dP3yYr2FzF6OI=",
+      "purpose": "Encrypt and decrypt live RTSP video streams"
+    }
+  },
+
+  "rotation_policy": {
+    "enabled": true,
+    "rotate_on_expiry": true,
+    "rotate_on_compromise": true,
+    "backup_last_key": true,
+    "max_active_keys": 2
+  },
+
+  "backup_policy": {
+    "encrypt_backup": true,
+    "backup_path": "backups/security/aes_keys.bak",
+    "compression": "gzip"
+  },
+
+  "integrity_check": {
+    "hash_algorithm": "SHA3-512",
+    "last_verified": "2025-10-21T23:55:00Z",
+    "verification_passed": true
+  }
+}
