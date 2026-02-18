@@ -1,19 +1,8 @@
-# ============================================================
-# MAYURI AUTHORIZATION & SECURITY POLICY CONFIGURATION
-# ============================================================
-# Author: Shree Praveen(@p_rav_ee_n1082)
-# Description:
-#   Centralized security rules for user authentication,
-#   inter-module authorization, and API access.
-#   Applied by modules under /src/communication/, /core/, and /ui_control/.
-# ============================================================
-
 version: 1.2
 last_updated: 2025-10-22
 
-# ------------------------------------------------------------
-# 🔐 AUTHENTICATION MODES
-# ------------------------------------------------------------
+# AUTHENTICATION MODES
+
 auth_modes:
   # Basic password-based (for simulation/local use)
   password:
@@ -42,9 +31,9 @@ auth_modes:
     ca_file: "config/security/certs/ca.crt"
     cert_expiry_days_warning: 15
 
-# ------------------------------------------------------------
-# 👤 USER ROLES & ACCESS LEVELS
-# ------------------------------------------------------------
+# -------------
+# USER ROLES & ACCESS LEVELS
+
 roles:
   - name: "operator"
     description: "Standard field operator controlling drone missions"
@@ -79,9 +68,9 @@ roles:
       - "execute_defensive_action"
       - "request_failsafe_landing"
 
-# ------------------------------------------------------------
-# 🧱 MODULE ACCESS CONTROL (RBAC)
-# ------------------------------------------------------------
+# ---------------
+# MODULE ACCESS CONTROL (RBAC)
+
 module_access:
   ai_core:
     required_roles: ["developer", "autonomous_ai"]
@@ -107,9 +96,9 @@ module_access:
     required_roles: ["supervisor"]
     encryption_required: true
 
-# ------------------------------------------------------------
-# ⏱️ SESSION MANAGEMENT
-# ------------------------------------------------------------
+# --------------------------------------
+# SSION MANAGEMENT
+
 session:
   idle_timeout_minutes: 20
   max_concurrent_sessions_per_user: 2
@@ -117,9 +106,9 @@ session:
   audit_log_enabled: true
   audit_log_path: "logs/security/audit.log"
 
-# ------------------------------------------------------------
-# 🚨 SECURITY RESPONSES
-# ------------------------------------------------------------
+# --------------------------------
+#  SECURITY RESPONSES
+
 alerts:
   unauthorized_access:
     action: "lock_system"
@@ -139,8 +128,8 @@ alerts:
     log_event: true
 
 # ------------------------------------------------------------
-# 🔒 ENCRYPTION & KEYS
-# ------------------------------------------------------------
+# ENCRYPTION & KEYS
+
 encryption:
   symmetric:
     algorithm: "AES-256-GCM"
@@ -153,8 +142,8 @@ encryption:
   data_integrity_check: "SHA3-512"
 
 # ------------------------------------------------------------
-# 🧩 INTEGRATION SECURITY
-# ------------------------------------------------------------
+# INTEGRATION SECURITY
+
 integration_policies:
   external_api:
     require_signed_requests: true
@@ -167,7 +156,3 @@ integration_policies:
     encrypt_logs: true
     compress_before_upload: true
     upload_interval_minutes: 30
-
-# ------------------------------------------------------------
-# ✅ POLICY END
-# ------------------------------------------------------------

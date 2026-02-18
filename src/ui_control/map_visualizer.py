@@ -62,7 +62,7 @@ class MapVisualizer(Node):
         self.map_thread = threading.Thread(target=self.map_loop, daemon=True)
         self.map_thread.start()
 
-        self.get_logger().info("🗺️ MapVisualizer initialized and running.")
+        self.get_logger().info(" MapVisualizer initialized and running.")
 
     # ---------------------------------------------------------------------
     def on_flight_status(self, msg: String):

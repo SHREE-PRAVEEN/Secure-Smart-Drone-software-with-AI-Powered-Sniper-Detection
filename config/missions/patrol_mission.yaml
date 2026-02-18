@@ -1,18 +1,11 @@
-# ============================================================
-# MAYURI AUTONOMOUS PATROL MISSION CONFIGURATION
-# ============================================================
-# Author: Shree Praveen(@p_rav_ee_n1082)
-# Description:
-#   Defines patrol routes, behavior, communication strategy,
-#   and safety logic for surveillance and reconnaissance missions.
-# ============================================================
+
 
 version: 1.4
 last_updated: 2025-10-22
 
 # ------------------------------------------------------------
-# 🚁 MISSION PARAMETERS
-# ------------------------------------------------------------
+#MISSION PARAMETERS
+
 mission:
   name: "Border_Patrol_Sector_A"
   mission_type: "autonomous_patrol"
@@ -25,8 +18,8 @@ mission:
   priority_level: "medium"
 
 # ------------------------------------------------------------
-# 📍 WAYPOINTS (latitude, longitude, altitude in meters)
-# ------------------------------------------------------------
+#  WAYPOINTS (latitude, longitude, altitude in meters)
+
 waypoints:
   - { lat: 27.1775, lon: 78.0066, alt: 50 }
   - { lat: 27.1780, lon: 78.0090, alt: 55 }
@@ -41,8 +34,8 @@ hover_points:
   capture_media: true
 
 # ------------------------------------------------------------
-# 🎥 SURVEILLANCE SETTINGS
-# ------------------------------------------------------------
+# SURVEILLANCE SETTINGS
+
 surveillance:
   camera_feed: "/mayuri/camera/rgb"
   thermal_feed: "/mayuri/camera/thermal"
@@ -57,8 +50,8 @@ surveillance:
     alert_on_threat: true
 
 # ------------------------------------------------------------
-# 📡 COMMUNICATION SETTINGS
-# ------------------------------------------------------------
+#  COMMUNICATION SETTINGS
+
 communication:
   report_interval_s: 30
   send_status_to: "/mayuri/mission/status"
@@ -68,8 +61,8 @@ communication:
   retry_on_failure: true
 
 # ------------------------------------------------------------
-# 🧠 AI BEHAVIOR MODES
-# ------------------------------------------------------------
+# AI BEHAVIOR MODES
+
 ai_behavior:
   path_following_mode: "smooth_spline"
   obstacle_avoidance: true
@@ -80,8 +73,8 @@ ai_behavior:
   fusion_confidence_threshold: 0.65
 
 # ------------------------------------------------------------
-# 🧭 NAVIGATION & FLIGHT CONTROL
-# ------------------------------------------------------------
+#  NAVIGATION & FLIGHT CONTROL
+
 navigation:
   max_speed_mps: 12
   cruise_speed_mps: 8
@@ -92,8 +85,8 @@ navigation:
   failsafe_landing_zone: { lat: 27.1770, lon: 78.0045, alt: 0 }
 
 # ------------------------------------------------------------
-# 🧩 SENSOR CONFIGURATION
-# ------------------------------------------------------------
+#  SENSOR CONFIGURATION
+
 sensors:
   lidar: true
   radar: true
@@ -103,8 +96,8 @@ sensors:
   sensor_fusion_topic: "/mayuri/fusion/environment"
 
 # ------------------------------------------------------------
-# 🛡️ FAILSAFE & RECOVERY
-# ------------------------------------------------------------
+#  FAILSAFE & RECOVERY
+
 failsafe:
   low_battery_threshold_percent: 20
   communication_loss_timeout_s: 60
@@ -116,8 +109,8 @@ failsafe:
   alert_operator_on_trigger: true
 
 # ------------------------------------------------------------
-# 🚨 ALERTS & LOGGING
-# ------------------------------------------------------------
+# ALERTS & LOGGING
+
 alerts:
   visual_alerts: true
   audible_alerts: false
@@ -133,8 +126,8 @@ logging:
   upload_endpoint: "https://mayuri-control-center.local/upload_logs"
 
 # ------------------------------------------------------------
-# 🧠 CONTEXTUAL ADAPTATION
-# ------------------------------------------------------------
+#  CONTEXTUAL ADAPTATION
+
 context_awareness:
   auto_environment_detection: true
   environment_profiles:
@@ -151,7 +144,3 @@ context_awareness:
   switch_thresholds:
     light_level_lux: 50
     humidity_percent: 75
-
-# ------------------------------------------------------------
-# ✅ END OF CONFIGURATION
-# ------------------------------------------------------------

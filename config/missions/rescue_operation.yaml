@@ -1,18 +1,11 @@
-# ============================================================
-# MAYURI RESCUE OPERATION MISSION CONFIGURATION
-# ============================================================
-# Author: Shree Praveen(@p_rav_ee_n1082)
-# Description:
-#   Defines behavior, detection logic, and communication rules
-#   for autonomous humanitarian search-and-rescue missions.
-# ============================================================
+
 
 version: 1.2
 last_updated: 2025-10-22
 
 # ------------------------------------------------------------
-# 🚁 MISSION PARAMETERS
-# ------------------------------------------------------------
+#  MISSION PARAMETERS
+
 mission:
   name: "Disaster_Rescue_Zone_B"
   mission_type: "search_and_rescue"
@@ -26,8 +19,8 @@ mission:
   return_to_base_on_complete: true
 
 # ------------------------------------------------------------
-# 📍 WAYPOINTS (latitude, longitude, altitude)
-# ------------------------------------------------------------
+#  WAYPOINTS (latitude, longitude, altitude)
+
 waypoints:
   - { lat: 30.7420, lon: 79.4800, alt: 80 }
   - { lat: 30.7428, lon: 79.4825, alt: 78 }
@@ -42,8 +35,8 @@ search_grid:
   adaptive_replan_on_detection: true
 
 # ------------------------------------------------------------
-# 🔥 SURVIVOR DETECTION SETTINGS
-# ------------------------------------------------------------
+#  SURVIVOR DETECTION SETTINGS
+
 detection:
   ai_model: "ai_core/models/thermal_detector.pt"
   fusion_model: "ai_core/models/fusion_engine.onnx"
@@ -72,8 +65,8 @@ motion_analysis:
   confirm_motion_frames: 4
 
 # ------------------------------------------------------------
-# 🧠 AI BEHAVIOR & CONTEXTUAL ADAPTATION
-# ------------------------------------------------------------
+#  AI BEHAVIOR & CONTEXTUAL ADAPTATION
+
 ai_behavior:
   search_pattern: "spiral"
   reidentify_survivor: true
@@ -99,8 +92,8 @@ context_awareness:
   condition_metric: "light_level"
 
 # ------------------------------------------------------------
-# 🧭 NAVIGATION & FLIGHT CONTROL
-# ------------------------------------------------------------
+#  NAVIGATION & FLIGHT CONTROL
+
 navigation:
   max_speed_mps: 10
   cruise_speed_mps: 7
@@ -113,8 +106,8 @@ navigation:
   gps_update_rate_hz: 5
 
 # ------------------------------------------------------------
-# 🧩 SENSOR CONFIGURATION
-# ------------------------------------------------------------
+#  SENSOR CONFIGURATION
+
 sensors:
   lidar: true
   radar: true
@@ -125,8 +118,8 @@ sensors:
   sensor_fusion_topic: "/mayuri/fusion/rescue"
 
 # ------------------------------------------------------------
-# 📡 COMMUNICATION SETTINGS
-# ------------------------------------------------------------
+# COMMUNICATION SETTINGS
+
 communication:
   telemetry_topic: "/mayuri/telemetry/rescue"
   status_report_interval_s: 20
@@ -137,9 +130,8 @@ communication:
   server_endpoint: "https://mayuri-control-center.local/rescue"
   upload_interval_s: 60
 
-# ------------------------------------------------------------
-# 🚨 ALERTS & LOGGING
-# ------------------------------------------------------------
+
+
 alerts:
   ui_alerts: true
   sound_alerts: true
@@ -153,9 +145,8 @@ logging:
   compress_after_upload: true
   upload_logs: true
 
-# ------------------------------------------------------------
-# 🛡️ FAILSAFE & RECOVERY
-# ------------------------------------------------------------
+
+
 failsafe:
   low_battery_threshold_percent: 22
   communication_loss_timeout_s: 45
@@ -164,11 +155,10 @@ failsafe:
   safe_return_altitude_m: 60
   landing_behavior: "hover_and_descend"
   alert_operator_on_trigger: true
-  log_failsafe_events: true
+  log_failsafe_events: tracking_update_rate_hz
 
-# ------------------------------------------------------------
-# 🤝 COORDINATION WITH GROUND TEAMS
-# ------------------------------------------------------------
+
+  
 coordination:
   broadcast_survivor_locations: true
   location_broadcast_topic: "/mayuri/rescue/locations"
@@ -177,7 +167,3 @@ coordination:
   message_format: "JSON"
   include_coordinates_in_alerts: true
   emergency_signal_pattern: "SOS"
-
-# ------------------------------------------------------------
-# ✅ END OF CONFIGURATION
-# ------------------------------------------------------------

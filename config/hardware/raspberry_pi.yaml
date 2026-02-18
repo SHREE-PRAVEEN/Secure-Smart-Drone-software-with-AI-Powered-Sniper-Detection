@@ -1,18 +1,11 @@
-# ============================================================
-# MAYURI RASPBERRY PI HARDWARE CONFIGURATION
-# ============================================================
-# Author: Shree Praveen(@p_rav_ee_n1082)
-# Description:
-#   Hardware, AI, and system configuration for MAYURI
-#   running on Raspberry Pi (4B, 5, or Compute Module).
-# ============================================================
+
 
 version: 1.4
 last_updated: 2025-10-22
 
 # ------------------------------------------------------------
-# ⚙️ HARDWARE DETAILS
-# ------------------------------------------------------------
+#  HARDWARE DETAILS
+-
 hardware:
   name: "Raspberry_Pi_5"
   architecture: "ARM64"
@@ -31,8 +24,8 @@ hardware:
   swap_size_gb: 2
 
 # ------------------------------------------------------------
-# 🧠 AI INFERENCE SETTINGS
-# ------------------------------------------------------------
+#  AI INFERENCE SETTINGS
+
 inference:
   framework: "TensorFlow Lite"
   delegate: "edgetpu"
@@ -51,8 +44,8 @@ inference:
     - "ai_core/models/object_fusion_edge.tflite"
 
 # ------------------------------------------------------------
-# 🔒 SECURITY & ACCESS CONTROL
-# ------------------------------------------------------------
+#  SECURITY & ACCESS CONTROL
+
 security:
   encrypt_models: true
   encryption_key_ref: "MAYURI_AI_004"
@@ -65,8 +58,8 @@ security:
   signed_model_policy: true
 
 # ------------------------------------------------------------
-# ⚡ PERFORMANCE OPTIMIZATION
-# ------------------------------------------------------------
+#  PERFORMANCE OPTIMIZATION
+
 performance:
   cpu_governor: "ondemand"
   gpu_freq_mhz: 600
@@ -82,8 +75,8 @@ performance:
   enable_zerocopy_memory: true
 
 # ------------------------------------------------------------
-# 🧩 SENSOR CONFIGURATION
-# ------------------------------------------------------------
+#  SENSOR CONFIGURATION
+
 sensors:
   camera_interface: "CSI"
   supported_cameras:
@@ -97,8 +90,8 @@ sensors:
   sync_tolerance_ms: 40
 
 # ------------------------------------------------------------
-# 📡 NETWORK & COMMUNICATION
-# ------------------------------------------------------------
+# NETWORK & COMMUNICATION
+
 network:
   wifi_interface: "wlan0"
   ethernet_interface: "eth0"
@@ -113,8 +106,8 @@ network:
   max_retry_attempts: 5
 
 # ------------------------------------------------------------
-# 🧩 ROS2 INTEGRATION
-# ------------------------------------------------------------
+#  ROS2 INTEGRATION
+
 ros2:
   enable_ros2: true
   ros2_node_name: "raspberry_pi_node"
@@ -129,8 +122,8 @@ ros2:
   enable_logging: true
 
 # ------------------------------------------------------------
-# 🧾 LOGGING & MONITORING
-# ------------------------------------------------------------
+#  LOGGING & MONITORING
+
 logging:
   enable_detailed_logs: true
   log_path: "logs/hardware/raspberry_pi.log"
@@ -148,8 +141,8 @@ monitoring:
   system_health_topic: "/mayuri/system/pi_health"
 
 # ------------------------------------------------------------
-# 🧠 COMPATIBILITY & DEPENDENCIES
-# ------------------------------------------------------------
+#  COMPATIBILITY & DEPENDENCIES
+
 compatibility:
   supported_os:
     - "Raspberry Pi OS 64-bit"
@@ -167,8 +160,8 @@ compatibility:
     - "rclpy"
 
 # ------------------------------------------------------------
-# 🧩 BACKUP & RECOVERY
-# ------------------------------------------------------------
+#  BACKUP & RECOVERY
+
 backup:
   enable_auto_backup: true
   backup_interval_hours: 8
@@ -178,7 +171,3 @@ backup:
   remote_backup_endpoint: "https://mayuri-backup-server.local/pi"
   verify_backup_integrity: true
   restore_on_reboot: false
-
-# ------------------------------------------------------------
-# ✅ END OF CONFIGURATION
-# ------------------------------------------------------------

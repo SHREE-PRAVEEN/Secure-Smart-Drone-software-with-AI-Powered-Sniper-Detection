@@ -1,18 +1,11 @@
-# ============================================================
-# MAYURI COMMUNICATION PROTOCOL CONFIGURATION
-# ============================================================
-# Author: Shree Praveen(@p_rav_ee_n1082)
-# Description:
-#   Defines secure communication channels, protocols,
-#   and network behaviors for all MAYURI subsystems.
-# ============================================================
+
 
 version: 2.0
 last_updated: 2025-10-22
 
 # ------------------------------------------------------------
-# 🌐 NETWORK CONFIGURATION
-# ------------------------------------------------------------
+#  NETWORK CONFIGURATION
+
 network:
   mode: "hybrid"   # options: wifi | mesh | satellite | hybrid
   interfaces:
@@ -37,8 +30,8 @@ network:
     switch_to_satellite_if_unreachable: true
 
 # ------------------------------------------------------------
-# 🔒 ENCRYPTION & AUTHENTICATION
-# ------------------------------------------------------------
+#  ENCRYPTION & AUTHENTICATION
+
 encryption:
   protocol: "TLS1.3"
   key_exchange: "ECDHE"
@@ -59,8 +52,8 @@ authentication:
   node_identity_verification: true
 
 # ------------------------------------------------------------
-# 📡 COMMUNICATION CHANNELS
-# ------------------------------------------------------------
+#  COMMUNICATION CHANNELS
+
 channels:
   telemetry:
     protocol: "MQTT-S"
@@ -105,8 +98,8 @@ channels:
     compression: "gzip"
 
 # ------------------------------------------------------------
-# 🧩 MESSAGE FORMATTING & SIGNING
-# ------------------------------------------------------------
+#  MESSAGE FORMATTING & SIGNING
+
 message_security:
   signing_algorithm: "Ed25519"
   include_timestamp: true
@@ -117,8 +110,8 @@ message_security:
   schema_version: "1.0"
 
 # ------------------------------------------------------------
-# ⚙️ RETRY & FAILOVER POLICIES
-# ------------------------------------------------------------
+#RETRY & FAILOVER POLICIES
+
 retry_policy:
   network_timeout_seconds: 5
   message_retry_count: 3
@@ -135,8 +128,8 @@ failover:
     action: "request_refresh"
 
 # ------------------------------------------------------------
-# 📊 TELEMETRY & LOGGING
-# ------------------------------------------------------------
+#  TELEMETRY & LOGGING
+
 telemetry:
   send_rate_hz: 2
   compress_before_send: true
@@ -152,15 +145,11 @@ logging:
   log_remote_sync: true
 
 # ------------------------------------------------------------
-# 🔧 DEBUG & SIMULATION
-# ------------------------------------------------------------
+#  DEBUG & SIMULATION
+
 simulation:
   allow_unencrypted_mode: false
   allow_loopback_testing: true
   fake_latency_ms: 20
   packet_loss_percent: 0.5
   log_simulated_traffic: true
-
-# ------------------------------------------------------------
-# ✅ END OF CONFIG
-# ------------------------------------------------------------

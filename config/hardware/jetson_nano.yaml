@@ -1,18 +1,10 @@
-# ============================================================
-# MAYURI JETSON NANO HARDWARE CONFIGURATION
-# ============================================================
-# Author: Shree Praveen(@p_rav_ee_n1082)
-# Description:
-#   Defines Jetson Nano (and other Jetson devices) setup,
-#   GPU acceleration, AI optimization, and monitoring rules.
-# ============================================================
 
 version: 1.5
 last_updated: 2025-10-22
 
 # ------------------------------------------------------------
-# ⚙️ HARDWARE DETAILS
-# ------------------------------------------------------------
+#  HARDWARE DETAILS
+
 hardware:
   name: "NVIDIA_Jetson_Nano"
   architecture: "ARM64"
@@ -31,8 +23,8 @@ hardware:
   swap_size_gb: 2
 
 # ------------------------------------------------------------
-# 🧠 AI INFERENCE SETTINGS
-# ------------------------------------------------------------
+# AI INFERENCE SETTINGS
+
 inference:
   framework: "TensorRT"
   precision: "FP16"
@@ -50,8 +42,8 @@ inference:
   telemetry_topic: "/mayuri/system/jetson_stats"
 
 # ------------------------------------------------------------
-# 🔒 SECURITY & ENCRYPTION
-# ------------------------------------------------------------
+# SECURITY & ENCRYPTION
+
 security:
   encrypt_models: true
   model_encryption_key_ref: "MAYURI_AI_004"
@@ -63,8 +55,8 @@ security:
   signed_model_policy: true
 
 # ------------------------------------------------------------
-# ⚡ PERFORMANCE OPTIMIZATION
-# ------------------------------------------------------------
+#  PERFORMANCE OPTIMIZATION
+
 performance:
   gpu_governor: "performance"
   max_gpu_freq_mhz: 921
@@ -80,8 +72,8 @@ performance:
   enable_zerocopy_memory: true
 
 # ------------------------------------------------------------
-# 🧩 SENSOR INTEGRATION
-# ------------------------------------------------------------
+#  SENSOR INTEGRATION
+
 sensors:
   camera_interface: "CSI"
   supported_cameras:
@@ -95,8 +87,8 @@ sensors:
   fusion_topic: "/mayuri/fusion/jetson_data"
 
 # ------------------------------------------------------------
-# 📡 NETWORK & COMMUNICATION
-# ------------------------------------------------------------
+#  NETWORK & COMMUNICATION
+
 network:
   wifi_interface: "wlan0"
   ethernet_interface: "eth0"
@@ -110,8 +102,8 @@ network:
   heartbeat_interval_s: 5
 
 # ------------------------------------------------------------
-# 🧩 ROS2 INTEGRATION
-# ------------------------------------------------------------
+#  ROS2 INTEGRATION
+
 ros2:
   enable_ros2: true
   ros2_node_name: "jetson_ai_node"
@@ -126,8 +118,8 @@ ros2:
   enable_logging: true
 
 # ------------------------------------------------------------
-# 🧾 LOGGING & MONITORING
-# ------------------------------------------------------------
+#  LOGGING & MONITORING
+
 logging:
   enable_detailed_logs: true
   log_path: "logs/hardware/jetson_nano.log"
@@ -146,8 +138,8 @@ monitoring:
   system_health_topic: "/mayuri/system/health"
 
 # ------------------------------------------------------------
-# 🧠 COMPATIBILITY & DEPENDENCIES
-# ------------------------------------------------------------
+#  COMPATIBILITY & DEPENDENCIES
+
 compatibility:
   supported_os:
     - "Ubuntu 18.04 L4T"
@@ -167,8 +159,8 @@ compatibility:
     - "jetson-stats"
 
 # ------------------------------------------------------------
-# 🧩 BACKUP & RECOVERY
-# ------------------------------------------------------------
+#  BACKUP & RECOVERY
+
 backup:
   enable_auto_backup: true
   backup_interval_hours: 6
@@ -178,7 +170,3 @@ backup:
   remote_backup_endpoint: "https://mayuri-backup-server.local/jetson"
   verify_backup_integrity: true
   on_restore_reboot: true
-
-# ------------------------------------------------------------
-# ✅ END OF CONFIGURATION
-# ------------------------------------------------------------

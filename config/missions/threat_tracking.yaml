@@ -1,18 +1,9 @@
-# ============================================================
-# MAYURI THREAT TRACKING & RESPONSE CONFIGURATION
-# ============================================================
-# Author: Shree Praveen(@p_rav_ee_n1082)
-# Description:
-#   Defines AI behavior, risk assessment, and tracking logic
-#   for threat detection and autonomous response missions.
-# ============================================================
-
 version: 1.5
 last_updated: 2025-10-22
 
-# ------------------------------------------------------------
-# 🎯 THREAT DETECTION SETTINGS
-# ------------------------------------------------------------
+# ----------------------------------------------
+# THREAT DETECTION SETTINGS  (we  are man , we chase though battle)
+
 detection:
   enabled: true
   ai_model: "ai_core/models/yolo_defense.onnx"
@@ -28,9 +19,9 @@ detection:
     min_velocity_mps: 0.5
     max_range_m: 100.0
 
-# ------------------------------------------------------------
-# 🧠 THREAT CLASSIFICATION
-# ------------------------------------------------------------
+# ---------------------------------------///---------------------
+#  THREAT CLASSIFICATION
+
 classification:
   method: "fusion_confidence_weighted"
   class_weights:
@@ -43,9 +34,9 @@ classification:
   unknown_threshold: 0.4
   confirm_after_frames: 5
 
-# ------------------------------------------------------------
-# 📍 TRACKING STRATEGY
-# ------------------------------------------------------------
+# -----------------------------------------------------------
+#  TRACKING STRATEGY
+
 tracking:
   enabled: true
   tracker_type: "Kalman-3D"
@@ -57,9 +48,9 @@ tracking:
   update_rate_hz: 10
   velocity_smoothing_factor: 0.3
 
-# ------------------------------------------------------------
-# 🚨 RISK ASSESSMENT & ALERTING
-# ------------------------------------------------------------
+# --------------------------------------------
+#  RISK ASSESSMENT & ALERTING
+
 risk_assessment:
   scoring_model: "ai_core/models/radar_analyzer.pt"
   danger_levels:
@@ -91,9 +82,9 @@ alert_channels:
   remote_console: true
   log_to_file: "logs/threats/tracking_alerts.log"
 
-# ------------------------------------------------------------
-# 🛰️ RESPONSE ACTIONS
-# ------------------------------------------------------------
+# ----------------------------------------------------
+#  RESPONSE ACTIONS
+
 response_actions:
   autonomous_tracking:
     maintain_distance_m: 30
@@ -112,9 +103,9 @@ response_actions:
       - "offensive_response"
     safety_lock: true
 
-# ------------------------------------------------------------
-# 🧩 SENSOR FUSION SETTINGS
-# ------------------------------------------------------------
+# ---------------------------------------
+#  SENSOR FUSION SETTINGS
+
 sensor_fusion:
   fusion_mode: "weighted_average"
   temporal_sync_tolerance_ms: 50
@@ -124,9 +115,9 @@ sensor_fusion:
   thermal_weight: 0.1
   fusion_output_topic: "/mayuri/fusion/threats"
 
-# ------------------------------------------------------------
-# 📊 DATA LOGGING & ANALYTICS
-# ------------------------------------------------------------
+# ----------------------------
+#  DATA LOGGING & ANALYTICS
+
 logging:
   enable_raw_logs: true
   raw_log_path: "logs/threats/raw/"
@@ -137,9 +128,9 @@ logging:
   upload_to_server: true
   server_endpoint: "https://mayuri-analytics.local/upload"
 
-# ------------------------------------------------------------
-# 🧠 AI CONTEXTUAL ADAPTATION
-# ------------------------------------------------------------
+# ---------------------
+#  AI CONTEXTUAL ADAPTATION
+
 context_awareness:
   environment_profiles:
     - name: "urban"
@@ -154,7 +145,3 @@ context_awareness:
   adaptive_mode: true
   auto_profile_switch: true
   switch_condition_metric: "ambient_light"
-
-# ------------------------------------------------------------
-# ✅ END OF CONFIGURATION
-# ------------------------------------------------------------

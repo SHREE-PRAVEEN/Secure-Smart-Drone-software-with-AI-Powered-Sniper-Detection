@@ -1,19 +1,10 @@
-# ============================================================
-# MAYURI BORDER SURVEILLANCE MISSION CONFIGURATION
-# ============================================================
-# Author: Shree Praveen(@p_rav_ee_n1082)
-# Description:
-#   Defines long-range surveillance, route mapping,
-#   detection logic, and secure communication protocols
-#   for continuous border monitoring.
-# ============================================================
 
 version: 1.3
 last_updated: 2025-10-22
 
 # ------------------------------------------------------------
-# 🌐 MISSION PARAMETERS
-# ------------------------------------------------------------
+#  MISSION PARAMETERS  (yeah! we are man , we have mission)
+
 mission:
   name: "Border_Surveillance_Sector_05"
   mission_type: "continuous_surveillance"
@@ -26,8 +17,8 @@ mission:
   enable_logging: true
 
 # ------------------------------------------------------------
-# 📍 WAYPOINTS (latitude, longitude, altitude in meters)
-# ------------------------------------------------------------
+# WAYPOINTS (latitude, longitude, altitude in meters)
+
 waypoints:
   - { lat: 26.8900, lon: 75.7701, alt: 70 }
   - { lat: 26.8925, lon: 75.7750, alt: 72 }
@@ -44,8 +35,8 @@ surveillance_zones:
     - { lat: 26.8940, lon: 75.7775, radius_m: 80 }
 
 # ------------------------------------------------------------
-# 🎥 SURVEILLANCE SETTINGS
-# ------------------------------------------------------------
+# SURVEILLANCE SETTINGS
+
 surveillance:
   rgb_camera_topic: "/mayuri/camera/rgb"
   thermal_camera_topic: "/mayuri/camera/thermal"
@@ -66,8 +57,8 @@ surveillance:
     compress_video: true
 
 # ------------------------------------------------------------
-# 🧠 AI BEHAVIOR & RESPONSE
-# ------------------------------------------------------------
+#  AI BEHAVIOR & RESPONSE
+
 ai_behavior:
   multi_target_tracking: true
   reidentify_after_loss: true
@@ -79,8 +70,8 @@ ai_behavior:
   classify_unknown_as: "low_risk"
 
 # ------------------------------------------------------------
-# 📡 COMMUNICATION & NETWORK
-# ------------------------------------------------------------
+#  COMMUNICATION & NETWORK
+
 communication:
   telemetry_topic: "/mayuri/telemetry/border"
   encryption_required: true
@@ -93,8 +84,8 @@ communication:
   failover_node: "backup_station_alpha"
 
 # ------------------------------------------------------------
-# 🧭 NAVIGATION SETTINGS
-# ------------------------------------------------------------
+#  NAVIGATION SETTINGS
+
 navigation:
   flight_mode: "autonomous"
   max_speed_mps: 14
@@ -108,8 +99,8 @@ navigation:
   dynamic_replan_on_threat: true
 
 # ------------------------------------------------------------
-# 🧩 SENSOR FUSION CONFIGURATION
-# ------------------------------------------------------------
+#  SENSOR FUSION CONFIGURATION
+
 sensor_fusion:
   fusion_mode: "weighted_confidence"
   radar_weight: 0.3
@@ -121,8 +112,8 @@ sensor_fusion:
   output_topic: "/mayuri/fusion/border"
 
 # ------------------------------------------------------------
-# 🛡️ FAILSAFE & RECOVERY LOGIC
-# ------------------------------------------------------------
+#  FAILSAFE & RECOVERY LOGIC
+
 failsafe:
   low_battery_threshold_percent: 25
   communication_loss_timeout_s: 90
@@ -136,8 +127,8 @@ failsafe:
   log_failsafe_events: true
 
 # ------------------------------------------------------------
-# 🚨 ALERT MANAGEMENT
-# ------------------------------------------------------------
+#  ALERT MANAGEMENT
+
 alerts:
   enable_visual_alerts: true
   enable_audio_alerts: false
@@ -147,8 +138,8 @@ alerts:
   alert_server_endpoint: "https://mayuri-control-center.local/upload_alerts"
 
 # ------------------------------------------------------------
-# 📊 DATA LOGGING & UPLOAD
-# ------------------------------------------------------------
+# DATA LOGGING & UPLOAD
+
 logging:
   mission_log_path: "logs/missions/border_mission.log"
   enable_detailed_logs: true
@@ -157,8 +148,8 @@ logging:
   log_server_endpoint: "https://mayuri-control-center.local/upload_logs"
 
 # ------------------------------------------------------------
-# 🧠 CONTEXTUAL ADAPTATION
-# ------------------------------------------------------------
+#  CONTEXTUAL ADAPTATION
+
 context_awareness:
   auto_environment_detection: true
   environment_profiles:
@@ -173,7 +164,3 @@ context_awareness:
       lidar_noise_reduction: true
   auto_profile_switch: true
   switch_condition_metric: "visibility_level"
-
-# ------------------------------------------------------------
-# ✅ END OF CONFIGURATION
-# ------------------------------------------------------------

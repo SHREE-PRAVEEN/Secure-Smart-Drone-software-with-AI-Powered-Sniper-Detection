@@ -1,9 +1,6 @@
 """
 ai_only.launch.py
-------------------------------------------------------------
-MAYURI AI-Only Launch Script
-Author:Shree Praveen(@p_rav_ee_n1082)
-Date: 2025-10-22
+
 
 Description:
     Launches MAYURI's AI Core modules only:
@@ -14,7 +11,7 @@ Description:
 
     This setup is ideal for development, simulation,
     or performance testing without navigation or comms.
-------------------------------------------------------------
+
 """
 
 from launch import LaunchDescription
@@ -25,8 +22,8 @@ from launch.substitutions import LaunchConfiguration
 
 def generate_launch_description():
     # --------------------------------------------------------
-    # 🔧 Launch Configuration Arguments
-    # --------------------------------------------------------
+    #  Launch Configuration Arguments
+    
     model_arg = DeclareLaunchArgument(
         "model_path",
         default_value="ai_core/models/yolo_defense.onnx",
@@ -40,8 +37,8 @@ def generate_launch_description():
     )
 
     # --------------------------------------------------------
-    # 🧠 AI Core Nodes
-    # --------------------------------------------------------
+    #  AI Core Nodes
+    
     target_detector = Node(
         package="mayuri",
         executable="target_detection",
@@ -75,10 +72,10 @@ def generate_launch_description():
     )
 
     # --------------------------------------------------------
-    # 🧩 Launch Sequence
-    # --------------------------------------------------------
+    # Launch Sequence
+   
     return LaunchDescription([
-        LogInfo(msg="🚀 Launching MAYURI AI Core (Detection, Classification, Tracking, Fusion)..."),
+        LogInfo(msg=" Launching MAYURI AI Core (Detection, Classification, Tracking, Fusion)..."),
         model_arg,
         conf_arg,
         target_detector,

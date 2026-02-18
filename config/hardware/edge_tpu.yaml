@@ -1,18 +1,11 @@
-# ============================================================
-# MAYURI EDGE TPU CONFIGURATION
-# ============================================================
-# Author: Shree Praveen(@p_rav_ee_n1082)
-# Description:
-#   Hardware configuration and optimization parameters
-#   for AI inference using Google Coral Edge TPU / USB Accelerator.
-# ============================================================
+
 
 version: 1.2
 last_updated: 2025-10-22
 
 # ------------------------------------------------------------
-# ⚙️ HARDWARE DETAILS
-# ------------------------------------------------------------
+# HARDWARE DETAILS
+-
 hardware:
   name: "Google_Coral_Edge_TPU"
   type: "usb_accelerator"
@@ -26,8 +19,8 @@ hardware:
   cooling_required: true
 
 # ------------------------------------------------------------
-# 🧠 AI INFERENCE SETTINGS
-# ------------------------------------------------------------
+#  AI INFERENCE SETTINGS
+
 inference:
   model_format: "tflite"
   delegate: "edgetpu"
@@ -44,8 +37,7 @@ inference:
     - "ai_core/models/object_fusion_edge.tflite"
 
 # ------------------------------------------------------------
-# 🔒 SECURITY & ACCESS CONTROL
-# ------------------------------------------------------------
+#  SECURITY & ACCESS CONTROL
 security:
   encrypt_model_files: true
   encryption_key_ref: "MAYURI_AI_004"
@@ -55,8 +47,8 @@ security:
   restrict_external_usb_access: true
 
 # ------------------------------------------------------------
-# ⚡ PERFORMANCE OPTIMIZATION
-# ------------------------------------------------------------
+#  PERFORMANCE OPTIMIZATION
+
 performance:
   temperature_limit_c: 70
   cooling_policy: "adaptive_fan"
@@ -68,8 +60,8 @@ performance:
   disable_idle_power_saving: false
 
 # ------------------------------------------------------------
-# 🔧 SYSTEM INTEGRATION
-# ------------------------------------------------------------
+#  SYSTEM INTEGRATION
+
 integration:
   detection_topic: "/mayuri/ai/inference_output"
   performance_monitor_topic: "/mayuri/system/edgetpu_stats"
@@ -79,8 +71,8 @@ integration:
   telemetry_interval_s: 15
 
 # ------------------------------------------------------------
-# 🧩 DIAGNOSTICS & HEALTH MONITORING
-# ------------------------------------------------------------
+#  DIAGNOSTICS & HEALTH MONITORING
+
 diagnostics:
   log_inference_latency: true
   log_path: "logs/hardware/edge_tpu_performance.log"
@@ -91,8 +83,8 @@ diagnostics:
   shutdown_temperature_c: 85
 
 # ------------------------------------------------------------
-# 🧠 COMPATIBILITY & DEPENDENCIES
-# ------------------------------------------------------------
+# COMPATIBILITY & DEPENDENCIES
+
 compatibility:
   supported_os:
     - "Ubuntu 20.04"
@@ -110,8 +102,8 @@ compatibility:
     - "numpy"
 
 # ------------------------------------------------------------
-# 🧾 LOGGING & BACKUP POLICY
-# ------------------------------------------------------------
+#  LOGGING & BACKUP POLICY
+
 logging:
   enable_detailed_logs: true
   log_rotation_days: 7
@@ -119,6 +111,3 @@ logging:
   backup_logs_to_server: true
   backup_endpoint: "https://mayuri-control-center.local/upload_hardware_logs"
 
-# ------------------------------------------------------------
-# ✅ END OF CONFIGURATION
-# ------------------------------------------------------------
